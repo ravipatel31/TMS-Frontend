@@ -1,0 +1,64 @@
+.fs-8 {
+    font-size: clamp(6px, 1vw - 0.6rem, 8px) !important;
+}
+
+.fs-10 {
+    font-size: clamp(8px, 1vw - 0.4rem, 10px) !important;
+}
+
+.fs-12 {
+    font-size: clamp(10px, 1vw - 0.2rem, 12px) !important;
+}
+
+.fs-14 {
+    font-size: clamp(12px, 1vw + 0.2rem, 14px) !important;
+}
+
+.fs-16 {
+    font-size: clamp(14px, 1vw + 0.4rem, 16px) !important;
+}
+
+.fs-18 {
+    font-size: clamp(16px, 1.1vw + 0.5rem, 18px) !important;
+}
+
+.fs-20 {
+    font-size: clamp(18px, 1.2vw + 0.5rem, 20px) !important;
+}
+
+.fs-24 {
+    font-size: clamp(20px, 1.5vw + 0.6rem, 24px) !important;
+}
+
+.fs-28 {
+    font-size: clamp(24px, 1.7vw + 0.7rem, 28px) !important;
+}
+
+.fs-32 {
+    font-size: clamp(24px, 2vw + 0.8rem, 32px) !important;
+}
+
+.fs-36 {
+    font-size: clamp(28px, 2.5vw, 36px) !important;
+    line-height: normal !important;
+}
+
+.fs-42 {
+    font-size: clamp(32px, 3vw + 1rem, 42px) !important;
+    line-height: normal !important;
+}
+
+.fs-48 {
+    font-size: clamp(36px, 3.5vw + 1rem, 48px) !important;
+    line-height: normal !important;
+}
+
+.fs-52 {
+    font-size: clamp(40px, 4vw + 1rem, 52px) !important;
+    line-height: normal !important;
+}
+
+.fs-72 {
+    font-size: clamp(50px, 5vw + 1rem, 72px) !important;
+    line-height: normal !important;
+}

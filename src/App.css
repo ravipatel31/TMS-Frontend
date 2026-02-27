@@ -1,0 +1,337 @@
+@import url('/src/Assets/Style/fonts.css');
+@import url('/src/Assets/Style/theme.css');
+
+
+.App {
+  height: 100vh;
+}
+
+* {
+  font-family: "Lato", sans-serif !important;
+}
+
+.bg-main {
+  background-color: var(--primary-color) !important;
+}
+
+.bg-light-main {
+  background-color: var(--primary-light-color) !important;
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.profile-bg {
+  background-color: #ffffff2A;
+  border-radius: 50px;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.text-second {
+  color: var(--primary-color);
+}
+
+.text-main {
+  color: var(--primary-color);
+}
+
+.text-light {
+  color: var(--primary-color) !important;
+}
+
+.f-bold {
+  font-weight: 700 !important;
+}
+
+.form-input label {
+  font-size: clamp(12px, 1vw + 0.2rem, 14px) !important;
+  color: var(--black-color) !important;
+  margin-bottom: 5px;
+}
+
+.form-input label::after {
+  content: '*';
+  margin-left: 2px;
+  color: #ff0000;
+}
+
+.form-input .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
+.form-input .MuiPickersOutlinedInput-root .MuiPickersOutlinedInput-notchedOutline {
+  border-radius: 10px !important;
+  border-color: var(--black-light-color) !important;
+}
+
+.form-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.form-input .MuiPickersOutlinedInput-root.Mui-focused .MuiPickersOutlinedInput-notchedOutline {
+  /* border-radius: 10px !important; */
+  border-color: var(--primary-color) !important;
+}
+
+.text-end {
+  text-align: end !important;
+}
+
+.form-input input,
+.form-input .MuiPickersSectionList-root {
+  padding: 14px !important;
+  /* font-size: clamp(14px, 1vw + 0.4rem, 16px) !important; */
+  font-size: clamp(12px, 1vw + 0.2rem, 14px) !important;
+  color: var(--primary-color);
+  line-height: normal !important;
+}
+
+.form-input .MuiPickersOutlinedInput-root {
+  padding-left: 0px !important;
+}
+
+.form-input .MuiSvgIcon-root {
+  fill: var(--primary-color);
+}
+
+.form-input .Mui-checked .MuiSvgIcon-root {
+  color: var(--primary-color) !important;
+}
+
+.btn-main {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  font-size: clamp(12px, 1vw + 0.2rem, 14px) !important;
+
+}
+
+a {
+  cursor: pointer;
+}
+
+.border-main {
+  border: 2px solid var(--primary-color);
+}
+
+.border-10 {
+  border-radius: 10px !important;
+}
+.border-20 {
+  border-radius: 20px !important;
+}
+
+.menue-gap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+}
+
+.menue-gap:hover {
+  color: var(--primary-color);
+}
+
+.top-menue-item {
+  gap: 10px;
+  border: none !important;
+  color: white !important;
+  text-transform: none !important;
+}
+
+.top-menue .Mui-selected {
+  background-color: white !important;
+  border-radius: 10px !important;
+  color: var(--primary-color) !important;
+}
+
+.top-menue-item:not(.Mui-selected):hover {
+  background-color: #ffffff1A !important;
+  border-radius: 10px !important;
+}
+
+.full-border {
+  top: 111px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid var(--black-light-color);
+}
+
+.MuiPickersSectionList-root {
+  width: fit-content !important
+}
+
+.track-toggle-button {
+  text-transform: none !important;
+  border: 1px solid var(--black-light-color) !important;
+  border-radius: 10px !important;
+  white-space: nowrap;
+}
+
+.track-toggle .Mui-selected {
+  background-color: var(--primary-color) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.track-toggle-button:not(.Mui-selected):hover {
+  background-color: #745FDD1A;
+  border-color: #745FDD1A;
+}
+
+.dashed-border {
+  border: none;
+  height: 2px;
+  background-image: repeating-linear-gradient(to right, #0000008A 0 10px, transparent 12px 20px);
+}
+
+@media (max-width:1200px) {
+  .full-border {
+    top: 160px;
+  }
+}
+
+
+/* Decorative shapes */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.shape-red {
+  width: 420px;
+  height: 420px;
+  background: var(--primary-color);
+  top: -120px;
+  right: 0px;
+  border-radius: 0 0 0 100%;
+}
+
+.shape-red-light {
+  width: 420px;
+  height: 220px;
+  background: var(--primary-color);
+  bottom: 0px;
+  right: 0px;
+  border-radius: 100% 0 0 0;
+}
+
+.shape-red2 {
+  width: 420px;
+  height: 420px;
+  background: var(--primary-light-color);
+  bottom: 0px;
+  left: -120px;
+  transform: rotate(-180deg);
+  border-radius: 0 0 0 100%;
+}
+
+.shape-red-light2 {
+  width: 520px;
+  height: 320px;
+  background: var(--primary-color);
+  top: -140px;
+  left: -120px;
+  transform: rotate(-180deg);
+  border-radius: 100% 0 0 0;
+}
+
+.shape-blue {
+  width: 120px;
+  height: 120px;
+  background: #dff2fb;
+  top: 40%;
+  left: 52%;
+}
+
+.shape-blue-small {
+  width: 60px;
+  height: 60px;
+  background: #dff2fb;
+  bottom: 20%;
+  right: 30%;
+}
+
+.shape-beige {
+  width: 80px;
+  height: 80px;
+  background: #f5e6d6;
+  top: 18%;
+  right: 18%;
+}
+
+/* Content */
+.error-code {
+  /* font-size: 140px; */
+  font-weight: 300;
+  color: var(--primary-color);
+}
+
+.btn-outline-custom {
+  border: 2px solid #000;
+  padding: 10px 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 4px 4px 0 var(--primary-color);
+}
+
+.btn-outline-custom:hover {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.custom-progress {
+  width: 100%;
+  height: 8px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Background (non-filled part) */
+.custom-progress::-webkit-progress-bar {
+  background-color: var(--primary-light-color);
+  border-radius: 10px;
+}
+
+/* Filled part */
+.custom-progress::-webkit-progress-value {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+/* Firefox */
+.custom-progress::-moz-progress-bar {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+.MuiDrawer-root {
+  overflow: visible !important;
+}
+
+.pac-container {
+  z-index: 2000 !important; /* must be higher than the drawer */
+}
+.MuiInputBase-input::placeholder  {
+      color: var(--black-color) !important;
+    }
+
+    
+
+@media (max-width:600px) {
+
+  .form-input input,
+  .form-input .MuiPickersSectionList-root {
+    padding: 10px !important;
+    /* font-size: clamp(14px, 1vw + 0.4rem, 16px) !important; */
+    font-size: clamp(12px, 1vw + 0.2rem, 14px) !important;
+    color: var(--primary-color);
+    line-height: normal !important;
+  }
+}
