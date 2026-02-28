@@ -6,12 +6,12 @@ import Authlayout from '../Layout/AuthLayout/Authlayout'
 import Login from '../Screens/Auth/Login/Login'
 import Verify from '../Screens/Auth/Verify/Verify'
 import Otp from '../Screens/Auth/Otp/Otp'
-import Dashboard from '../Screens/Components/Dashboard/Dashboard'
 import Mainlayout from '../Layout/MainLayout/Mainlayout'
 import NotFound from '../Screens/FallBack/NotFound'
-import Users from '../Screens/Components/Users/Users'
 import Organizations from '../Screens/Components/Organizations/Organizations'
 import UserDetails from '../Screens/Components/UserDetails/UserDetails'
+import OrganizationDashboard from '../Screens/Organizations/OrganizationDashboard/OrganizationDashboard'
+import OrganizationUsers from '../Screens/Organizations/OrganizationUsers/OrganizationUsers'
 
 function AppRoute() {
     return (
@@ -64,13 +64,13 @@ function AppRoute() {
                 <Route path='/dashboard'
                     element={
                         <Mainlayout allowedRoles={["Admin","Director"]}>
-                            <Dashboard />
+                            <OrganizationDashboard />
                         </Mainlayout>
                     } />
                 <Route path='/users'
                     element={
                         <Mainlayout allowedRoles={["Admin", "Director"]}>
-                            <Users />
+                            <OrganizationUsers />
                         </Mainlayout>
                     } />
                 <Route path="*" element={<NotFound />} />

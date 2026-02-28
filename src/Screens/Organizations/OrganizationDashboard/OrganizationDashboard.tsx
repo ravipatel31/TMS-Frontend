@@ -1,14 +1,17 @@
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, KeyboardArrowDown } from '@mui/icons-material';
 import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, FormControlLabel, Grid, LinearProgress, Menu, MenuItem, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, Typography, useMediaQuery, useTheme } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Projects from '../../../Assets/Images/Dashboard/TotalProjects.png'
 import Team from '../../../Assets/Images/Dashboard/TotalTeam.png'
 import Time from '../../../Assets/Images/Dashboard/Time.png'
 import Accuracy from '../../../Assets/Images/Dashboard/Accuracy.png'
-import PieChart from '../Charts/PieChart/PieChart';
-import LineChart from '../Charts/LineChart/LineChart';
+import PieChart from '../../Components/Charts/PieChart/PieChart';
+import LineChart from '../../Components/Charts/LineChart/LineChart';
+import { ApiGetOrganizationDashobard } from '../../../Core/Apicall';
+import { toast } from 'react-toastify';
+import dayjs from 'dayjs';
 
-function Dashboard() {
+function OrganizationDashboard() {
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -16,11 +19,12 @@ function Dashboard() {
   ];
 
   const years = [2022, 2023, 2024, 2025, 2026];
-  const [selectedMonth, setSelectedMonth] = useState<String>("August");
-  const [selectedYear, setSelectedYear] = useState<Number>(2024);
+  const [selectedMonth, setSelectedMonth] = useState<string>(dayjs().format("MMMM"));
+  const [selectedYear, setSelectedYear] = useState<Number>(dayjs().year());
 
   const [monthAnchor, setMonthAnchor] = useState<null | HTMLElement>(null);
   const [yearAnchor, setYearAnchor] = useState<null | HTMLElement>(null);
+  const [organizationDetails, setOrganizationDetails] = useState<any>([])
 
   const openMonth = Boolean(monthAnchor);
   const openYear = Boolean(yearAnchor);
@@ -28,8 +32,22 @@ function Dashboard() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
+  const getOrganizationDashboard = async () => {
+    try {
+      const data = `?month=${months.indexOf(selectedMonth) + 1}&year=${selectedYear}`
+      const res = await ApiGetOrganizationDashobard(data)
+      setOrganizationDetails(res?.data)
+    } catch (error: any) {
+      toast.error(error?.message)
+    }
+  }
+  useEffect(() => {
+    if (selectedMonth && selectedYear) {
+      getOrganizationDashboard()
+    }
+  }, [selectedMonth, selectedYear])
   return (
-    <Box className='h-100 w-100 p-2 p-md-3 mx-auto' maxWidth={'1440px'}   overflow={'auto'}>
+    <Box className='h-100 w-100 p-2 p-md-3 mx-auto' maxWidth={'1440px'} overflow={'auto'}>
       <Box className='d-flex align-items-center flex-wrap w-100 justify-content-between'>
         <Typography className='fs-20 fw-bold'>Dashboard</Typography>
         <Box className='d-flex align-items-center' gap={1}>
@@ -131,7 +149,7 @@ function Dashboard() {
         </Box>
       </Box>
 
-      <Grid container className='mt-3 w-100'  spacing={2}>
+      <Grid container className='mt-3 w-100' spacing={2}>
         <Grid size={{ xs: 12, md: 6, lg: 3 }} className='bg-white border-10 p-3'>
           <Box className='d-flex alig-items-start' gap={2}>
             <Box className='p-2 bg-light-main' borderRadius={'50%'} height={'fit-content'} >
@@ -152,8 +170,8 @@ function Dashboard() {
             </Box>
             <Box>
               <Typography className='fs-16' gutterBottom>Total Team Meber</Typography>
-              <Typography className='fs-20 fw-bold' gutterBottom>18</Typography>
-              <Box className='d-flex align-items-center'><ArrowUpwardOutlined className='fs-14' sx={{ fill: "green" }} /><span className='text-success fs-12'>&nbsp;8</span><span className='fs-12'>&nbsp; New Hires</span></Box>
+              <Typography className='fs-20 fw-bold' gutterBottom>{organizationDetails?.totalUsers}</Typography>
+              <Box className='d-flex align-items-center'><ArrowUpwardOutlined className='fs-14' sx={{ fill: organizationDetails?.newUsersThisMonth > 0 ? "green":"#ccc" }} /><span className='text-success fs-12'>&nbsp;{organizationDetails?.newUsersThisMonth}</span><span className='fs-12'>&nbsp; New Hires</span></Box>
             </Box>
           </Box>
         </Grid>
@@ -262,25 +280,25 @@ function Dashboard() {
             ))}
           </Grid>
         </Grid>
-        <Grid size={{xs:12,md:4}} className='bg-white border-10 p-3'>
+        <Grid size={{ xs: 12, md: 4 }} className='bg-white border-10 p-3'>
           <Typography className='fw-bold fs-18 mb-3' gutterBottom>Upcoming Holidays</Typography>
 
-            <Box bgcolor={'#cccccc1A'} className='border-10 py-2 px-3 mb-2 d-flex justify-content-between'>
-              <Typography className='fs-14 fw-bold'>Holi</Typography>
-              <Typography className='fs-14'>3-Mar</Typography>
-            </Box>
-            <Box bgcolor={'#cccccc1A'} className='border-10 py-2 px-3 mb-2 d-flex justify-content-between'>
-              <Typography className='fs-14 fw-bold'>Ramnavmi</Typography>
-              <Typography className='fs-14'>21-Mar</Typography>
-            </Box>
-            <Box bgcolor={'#cccccc1A'} className='border-10 py-2 px-3 mb-2 d-flex justify-content-between'>
-              <Typography className='fs-14 fw-bold'>Dr. Ambedkar Jayanti</Typography>
-              <Typography className='fs-14'>5-Apr</Typography>
-            </Box>
+          <Box bgcolor={'#cccccc1A'} className='border-10 py-2 px-3 mb-2 d-flex justify-content-between'>
+            <Typography className='fs-14 fw-bold'>Holi</Typography>
+            <Typography className='fs-14'>3-Mar</Typography>
+          </Box>
+          <Box bgcolor={'#cccccc1A'} className='border-10 py-2 px-3 mb-2 d-flex justify-content-between'>
+            <Typography className='fs-14 fw-bold'>Ramnavmi</Typography>
+            <Typography className='fs-14'>21-Mar</Typography>
+          </Box>
+          <Box bgcolor={'#cccccc1A'} className='border-10 py-2 px-3 mb-2 d-flex justify-content-between'>
+            <Typography className='fs-14 fw-bold'>Dr. Ambedkar Jayanti</Typography>
+            <Typography className='fs-14'>5-Apr</Typography>
+          </Box>
         </Grid>
       </Grid>
     </Box>
   )
 }
 
-export default Dashboard
+export default OrganizationDashboard

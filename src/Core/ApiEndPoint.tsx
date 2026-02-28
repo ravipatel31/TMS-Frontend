@@ -9,6 +9,8 @@ export const deleteorganizations = `${api_url}/organization/delete-organization`
 export const getuserDetails = `${api_url}/user/get-user-details`
 export const updateDetails = `${api_url}/user/update-user-details`
 export const getusers = `${api_url}/user/get-users`
+export const deleteuser = `${api_url}/user/delete-user`
+export const organizationDashboard = `${api_url}/organization/organization-dashboard`
 
 
 

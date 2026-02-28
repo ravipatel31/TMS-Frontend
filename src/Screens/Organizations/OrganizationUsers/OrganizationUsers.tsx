@@ -4,14 +4,15 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { RootState } from '../../../Redux/store'
-import { ApiGetUser } from '../../../Core/Apicall'
+import { ApiDeleteUser, ApiGetUser } from '../../../Core/Apicall'
 import { toast } from 'react-toastify'
+// import ConfirmDialog from '../Dialog/ConfrimDialog'
 
-function Users() {
+function OrganizationUsers() {
   const [selectedMenue, setSelectedMenue] = useState<string>('usermanagement')
   const [searchQuery, setSearchQuery] = useState<string>('')
   const status = [
-    "Active", "InActive","All"
+    "Active", "InActive", "All"
   ];
 
   const roles = ["Employee"];
@@ -26,11 +27,22 @@ function Users() {
   const openStatus = Boolean(statusAnchor);
   const openYear = Boolean(roleAnchor);
   const [users, setUsers] = useState<any[]>([])
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
 
   const getUserDetails = async () => {
     try {
-      const data =`?status=${selectedStatus.toLocaleLowerCase()}`
+      const data = `?status=${selectedStatus.toLocaleLowerCase()}${debouncedSearch ? `&searchTerm=${debouncedSearch}`:""}`
       const res = await ApiGetUser(data)
       if (res?.status) {
         setUsers(res?.data?.filter((item: any) => item?.role.name !== "Director"))
@@ -41,8 +53,34 @@ function Users() {
   }
 
   useEffect(() => {
-    getUserDetails()
-  }, [selectedStatus])
+   if(!debouncedSearch) getUserDetails()
+  }, [selectedStatus, debouncedSearch])
+
+  useEffect(() => {
+    if (!debouncedSearch) return;
+
+    getUserDetails();
+  }, [debouncedSearch]);
+
+  const handleChangeUserStatus = async (userId: number, status: string) => {
+    const isConfirm = window.confirm(`Are you sure you want to ${status} this user ?`)
+    if (isConfirm) {
+      setAnchorEl(null)
+      try {
+        const data = {
+          userId,
+          status,
+
+        }
+        const res = await ApiDeleteUser(data)
+        if (res?.status) {
+          getUserDetails()
+        }
+      } catch (error: any) {
+        toast.error(error?.message)
+      }
+    }
+  }
 
   return (
     // p-2 p-md-3
@@ -194,22 +232,22 @@ function Users() {
 
         <Grid container spacing={2}>
           {users?.map((user: any, index: number) => (
-            <Grid size={3} key={index} className='bg-white border-10 p-3 pb-5'>
+            <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }} key={index} className='bg-white border-10 p-3 pb-5'>
               <Box className='d-flex align-items-center justify-content-between'>
-                <Chip className="text-color px-3 py-3" sx={{ borderRadius:'8px', background: user?.isActive ? "#39CA941A" :"#E217171A", color: user?.isActive ? "#39CA94" :"#E21717"}} label={user?.isActive ? "Active" : "InActive"} size="small" />
+                <Chip className="text-color px-3 py-3" sx={{ borderRadius: '8px', background: user?.isActive ? "#39CA941A" : "#E217171A", color: user?.isActive ? "#39CA94" : "#E21717" }} label={user?.isActive ? "Active" : "InActive"} size="small" />
                 <IconButton
                   id="basic-button"
                   aria-controls={open ? 'basic-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
-                  onClick={(e) => { setAnchorEl(e.currentTarget) }}
+                  onClick={(e) => { setAnchorEl(e.currentTarget); setSelectedId(index) }}
                 >
                   <MoreHorizOutlined />
                 </IconButton>
                 <Menu
                   id="basic-menu"
                   anchorEl={anchorEl}
-                  open={open}
+                  open={open && index === selectedId}
                   onClose={() => { setAnchorEl(null) }}
                   slotProps={{
                     list: {
@@ -217,7 +255,7 @@ function Users() {
                     },
                   }}
                 >
-                  <MenuItem>Delete</MenuItem>
+                  <MenuItem onClick={() => { handleChangeUserStatus(user?.userId, user?.isActive ? "delete" : "active") }}>{user?.isActive ? "DeActivate" : "Activate"}</MenuItem>
                   <MenuItem>
                     <Link to={'/organizations/userdetails'} style={{ textDecoration: 'none' }} className='text-dark' state={{ userId: user?.userId, }}>Edit</Link>
                   </MenuItem>
@@ -239,10 +277,8 @@ function Users() {
 
       </Box>
 
-
-
     </Box>
   )
 }
 
-export default Users
+export default OrganizationUsers

@@ -1,5 +1,5 @@
 import { baseApiCall } from './BaseApiCall'
-import { createorganizations, createuser, deleteorganizations, getorganizations, getuserDetails, getusers, login, sendemailotp, sendymobileotp, signup, updateDetails, updateorganizations, verifyemailotp, verifyymobileotp } from './ApiEndPoint'
+import { createorganizations, createuser, deleteorganizations, deleteuser, getorganizations, getuserDetails, getusers, login, organizationDashboard, sendemailotp, sendymobileotp, signup, updateDetails, updateorganizations, verifyemailotp, verifyymobileotp } from './ApiEndPoint'
 
 export const ApiLogin = (data: any) => {
   return baseApiCall({
@@ -63,6 +63,20 @@ export const ApiGetUser = (data?:any) => {
   return baseApiCall({
     url: getusers + data,
     method: 'get',
+  })
+}
+
+export const ApiGetOrganizationDashobard = (data?:any) => {
+  return baseApiCall({
+    url: organizationDashboard + data,
+    method: 'get',
+  })
+}
+export const ApiDeleteUser = (data?:any) => {
+  return baseApiCall({
+    url: deleteuser,
+    method: 'delete',
+    data
   })
 }
 
